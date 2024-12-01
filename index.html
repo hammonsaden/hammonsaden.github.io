@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html><head> <meta charset="UTF-8">
+    <title>student scores</title>
+</head>
+
+<body style="margin-left: 30px;">
+
+    <h1>CIT140 Students</h1>
+    <p>CIT140 Students: Exam Scores</p>
+
+
+    <input type="button" id="btn" value="Fetch Students' Scores">
+
+        <div id="result"></div>
+
+<script> 
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+        document.querySelector('#btn').onclick = async function() {
+                var response = await fetch('cit140students.json');
+            console.log(response);
+                if(response.ok) {
+                    var data = await response.json();
+                    
+                    var tableContents = "<table cellspacing='5'>"
+                    tableContents += "<tr><td>Midterm</td><td>Final</td></tr>";
+
+            for(i = 0; i < data.length; i++) {
+                tableContents += '<tr><td> ${data[i].name}</td> <td>${data[i].midterm}</td> <td>${data[i].final}</td></tr>';
+            }
+
+            tableContents += "</table>";
+
+            document.querySelector('#result').innerHTML = tableContents;
+        }
+        else {
+            document.querySelector('#result'),innerHTML = "Data not found";
+        }
+    };
+});
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
