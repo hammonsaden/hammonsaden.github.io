@@ -8,44 +8,57 @@
     <h1>CIT140 Students</h1>
     <p>CIT140 Students: Exam Scores</p>
 
-
-    <input type="button" id="btn" value="Fetch Students' Scores">
-
+    <button id="btnCIT">CIT Majors</button>
+    <button id="btnBUS">BUS Majors</button>
+    
         <div id="result"></div>
 
-<script> 
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const resultDiv = document.querySelector('#result');
 
-    document.addEventListener('DOMContentLoaded', function() {
+            async function fetchAndDisplay(major) {
+                try {
+                    const response = await fetch('cit140students.json');
+                    if (response.ok) {
+                        const data = await response.json();
 
-        document.querySelector('#btn').onclick = async function() {
-                var response = await fetch('cit140students.json');
-            console.log(response);
-                if(response.ok) {
-                    var data = await response.json();
-                    
-                    var tableContents = "<table cellspacing='5'>"
-                    tableContents += "<tr><td>Midterm</td><td>Final</td></tr>";
+                        const filteredData = data.filter(student => student.major === major);
 
-            for(i = 0; i < data.length; i++) {
-                tableContents += `<tr>
-                    <td>${data[i].name}</td>
-                    <td>${data[i].midterm}</td>
-                    <td>${data[i].final}</td>
-                </tr>`;
+                        if (filteredData.length > 0) {
+                            let tableContents = "<table>";
+                            tableContents += `
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Midterm</th>
+                                    <th>Final</th>
+                                </tr>`;
+                            filteredData.forEach(student => {
+                                tableContents += `
+                                    <tr>
+                                        <td>${student.name}</td>
+                                        <td>${student.midterm}</td>
+                                        <td>${student.final}</td>
+                                    </tr>`;
+                            });
+                            tableContents += "</table>";
+                            resultDiv.innerHTML = tableContents;
+                        } else {
+                            resultDiv.innerHTML = `<p>No students found for ${major} major.</p>`;
+                        }
+                    } else {
+                        resultDiv.innerHTML = "Data not found.";
+                    }
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                    resultDiv.innerHTML = "An error occurred while fetching data.";
+                }
             }
 
-            tableContents += "</table>";
-
-            document.querySelector('#result').innerHTML = tableContents;
-        }
-        else {
-            document.querySelector('#result'),innerHTML = "Data not found";
-        }
-    };
-});
-
-
-</script>
+            document.querySelector('#btnCIT').onclick = () => fetchAndDisplay('CIT');
+            document.querySelector('#btnBUS').onclick = () => fetchAndDisplay('BUS');
+        });
+    </script>
 </body>
 </html>
 
