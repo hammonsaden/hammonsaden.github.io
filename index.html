@@ -10,9 +10,10 @@
 
     <button id="btnCIT">CIT Majors</button>
     <button id="btnBUS">BUS Majors</button>
-    
-        <div id="result"></div>
 
+    <p>We filter our dataset by major</p>
+        <div id="result"></div>
+    
 <script>
         document.addEventListener('DOMContentLoaded', function () {
             const resultDiv = document.querySelector('#result');
@@ -30,6 +31,7 @@
                             tableContents += `
                                 <tr>
                                     <th>Name</th>
+                                    <th>Major</th>
                                     <th>Midterm</th>
                                     <th>Final</th>
                                 </tr>`;
