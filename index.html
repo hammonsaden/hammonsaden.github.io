@@ -27,7 +27,7 @@
                     tableContents += "<tr><td>Midterm</td><td>Final</td></tr>";
 
             for(i = 0; i < data.length; i++) {
-                tableContents += '<tr><td> ${data[i].name}</td> <td>${data[i].midterm}</td> <td>${data[i].final}</td></tr>';
+                tableContents += `<tr><td>${data[i].name}</td> <td>${data[i].midterm}</td> <td>${data[i].final}</td></tr>`;
             }
 
             tableContents += "</table>";
